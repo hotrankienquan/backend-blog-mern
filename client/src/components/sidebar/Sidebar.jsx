@@ -12,7 +12,6 @@ export default function Sidebar() {
     }
     getCats();
   }, [])
-  console.log(categories)
   return (
     <div className="sidebar">
       <div className="sidebarItem">

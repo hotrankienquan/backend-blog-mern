@@ -42,10 +42,6 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    // console.log(post)
-    // console.log(req.body)
-    // console.log(req)
-    // console.log(req.params)
     if (post.username === req.body.username) {
       try {
         await post.delete();
@@ -73,8 +69,6 @@ router.get("/:id", async (req, res) => {
 
 //GET ALL POSTS
 router.get("/", async (req, res) => {
-  //  get all posts cua ai do
-  // hoac la get all posts cua 1 category
   const username = req.query.username;
   const catName = req.query.cat;
   try {

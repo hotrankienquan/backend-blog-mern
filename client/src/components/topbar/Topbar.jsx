@@ -4,14 +4,11 @@ import { Context } from "../../context/Context";
 import "./topbar.css";
 
 export default function Topbar() {
-  // const user = false;
   const { user ,dispatch} = useContext(Context);
   const handleLogout = () => {
     dispatch({type: 'LOGOUT'})
   }
-  // const PF = 'http://localhost:5000/images/'
 
-  console.log(user)
   return (
     <div className="top">
       <div className="topLeft">

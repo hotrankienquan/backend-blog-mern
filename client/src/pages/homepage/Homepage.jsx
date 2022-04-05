@@ -12,14 +12,11 @@ dotenv.config()
 export default function Homepage() {
   const [posts, setPosts] = useState([]);
   const {search} = useLocation();
-  // console.log(search)
 
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await axiosInstance.get("/posts"+search);
-      // console.log(res);
       setPosts(res.data)
-      console.log("homepage", res.data)
     }
     fetchPosts();
   }, [search])

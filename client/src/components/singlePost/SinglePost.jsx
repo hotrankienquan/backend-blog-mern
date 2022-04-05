@@ -17,19 +17,16 @@ export default function SinglePost() {
   const [desc, setDesc] = useState("")
   const [updateMode, setUpdateMode] = useState(false)
   const [imgResponse,setImgResponse] = useState("")
-  console.log("data trong store context",user)
   useEffect(() => {
     const getPost = async () => {
       const res =await  axiosInstance.get("/posts/" + path);
-      console.log(res)
-setImgResponse(res.data.photo)
+      setImgResponse(res.data.photo)
       setPost(res.data)
       setTitle(res.data.title)
       setDesc(res.data.desc)
     }
     getPost()
   }, [path])
-  // console.log(post)
   const handleDelete = async () => {
     
     try {

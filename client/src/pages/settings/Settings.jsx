@@ -15,8 +15,6 @@ export default function Settings() {
  const [imageSelected, setImageSelected] = useState({});
   const [imgResponse,setImgResponse] = useState("")
   const { user, dispatch } = useContext(Context);
-  // const PF = 'http://localhost:5000/images/'
-  console.log(user)
   const handleSubmit =async (e) => {
     e.preventDefault()
     dispatch({type: 'UPDATE_START'})
@@ -25,38 +23,23 @@ export default function Settings() {
       username, email, password,
       profilePic:imgResponse
     }
-    // if (file) {
-    //   const data =new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append("name", filename);
-    //   data.append("file", file);
-    //   updatedUser.profilePic = filename;
-    //   try {
-    //     await axios.post("/upload", data);
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
     try {
       
      const res = await axiosInstance.put("/users/"+user.data.others._id, updatedUser);
       setSuccess(true)
     dispatch({type: 'UPDATE_SUCCESS', payload: res.data})
 
-      // window.location.replace("/post/"+res.data._id)
     } catch (err) {
     dispatch({type: 'UPDATE_FAILURE'})
       console.log(err)
     }
   }
     const uploadImage = () => {
-      console.log(imageSelected)
     const formData = new FormData();
     formData.append("file", imageSelected)
     formData.append("upload_preset", "kchrwa7s")
 
     axios.post("https://api.cloudinary.com/v1_1/kienquan/image/upload", formData).then(res => {
-      // console.log(res)
       setImgResponse(res.data.secure_url)
     })
   }

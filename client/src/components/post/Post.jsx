@@ -3,27 +3,8 @@ import "./post.css";
 import axios from "axios";
 import { useEffect } from "react";
 export default function Post({img, post}) {
-  // console.log(post)
-  // const PF = "http://localhost:5000/images/"
-  //  useEffect(() => {
-  //   const getPost = async () => {
-  //     const res =await  axios.get("/posts/" + );
-  //     console.log(res)
-
-  //   }
-  //   getPost()
-  // }, [])
-  console.log("post thz con", post)
   return (
     <div className="post">
-      {/* {post.map((img, index) => (
-        <img
-          key={index}
-          className="postImg"
-          src={img.photo}
-          alt=""
-        />
-      ))} */}
       {post.photo &&
         <img
           className="postImg"

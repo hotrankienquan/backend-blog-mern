@@ -7,7 +7,6 @@ import { axiosInstance } from "../../config";
 export default function Write() {
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
-  // const [file, setFile] = useState(null)
   const { user } = useContext(Context);
   const [imageSelected, setImageSelected] = useState({});
   const [imgResponse,setImgResponse] = useState("")
@@ -18,18 +17,6 @@ export default function Write() {
       title, desc,
       photo: imgResponse
     }
-    // if (file) {
-    //   const data =new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append("name", filename);
-    //   data.append("file", file);
-    //   newPost.photo = filename;
-    //   try {
-    //     await axios.post("/upload", data);
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
     try {
       
       const res = await axiosInstance.post("/posts", newPost);
@@ -39,27 +26,16 @@ export default function Write() {
     }
   }
   const uploadImage = () => {
-      console.log(imageSelected)
     const formData = new FormData();
     formData.append("file", imageSelected)
     formData.append("upload_preset", "kchrwa7s")
 
     axios.post("https://api.cloudinary.com/v1_1/kienquan/image/upload", formData).then(res => {
-      console.log(res)
       setImgResponse(res.data.secure_url)
     })
   }
   return (
     <div className="write">
-      {/* {file && (
-
-        <img
-          className="writeImg"
-          src={URL.createObjectURL(file)}
-          alt=""
-        />
-
-      )} */}
       <Image cloudName="kienquan" publicId={imgResponse}
         className="writeImg"
       />
@@ -72,9 +48,6 @@ export default function Write() {
           <label htmlFor="fileInput">
             <i className="writeIcon fas fa-plus"></i>
           </label>
-          
-          {/* onChange={e => setFile(e.target.files[0])} */}
-
           <input
             className="writeInput"
             placeholder="Title"
