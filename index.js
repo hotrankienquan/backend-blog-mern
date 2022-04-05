@@ -57,10 +57,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
-app.use('/', (req, res) => {
-  console.log('this is main url')
-  res.send("this is main")
-})
+// app.use('/', (req, res) => {
+//   console.log('this is main url')
+//   res.send("this is main")
+// })
 // config deploy
 app.use(express.static(path.join(__dirname, "/client/build")));
 
