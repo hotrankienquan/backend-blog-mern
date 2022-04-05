@@ -8,7 +8,14 @@ const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path");
-
+app.use(cors());
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type, Accept,Authorization,Origin");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    next();
+  });`enter code here`
 console.log('lama')
 // app.use('/', (req, res) => {
 //   console.log('this is main url')

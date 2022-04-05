@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.12.9",
@@ -14,10 +15,11 @@
   "devDependencies": {},
   "scripts": {
     "start": "nodemon index.js"
-
   },
   "author": "",
   "license": "ISC",
   "description": "",
-  "engines": { "node": "10.x" }
+  "engines": {
+    "node": "10.x"
+  }
 }
