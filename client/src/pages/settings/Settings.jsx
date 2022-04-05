@@ -1,32 +1,57 @@
 import "./settings.css";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { useContext, useState } from "react";
+import { useContext, useState , useRef, useEffect } from "react";
 import { Context } from "../../context/Context";
 import axios from "axios";
-import {Image} from "cloudinary-react"
+import { Image } from "cloudinary-react"
 import { axiosInstance } from "../../config";
 
+// import { axiosInstance } from "../../config";
+// export function useIsMounted() {
+//   const isMounted = useRef(false);
+
+//   useEffect(() => {
+//     isMounted.current = true;
+//     return () => isMounted.current = false;
+//   }, []);
+
+//   return isMounted;
+// }
 export default function Settings() {
   const [file, setFile] = useState(null)
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [success, setSuccess] = useState(false)
+  // const [success, setSuccess] = useState(false)
  const [imageSelected, setImageSelected] = useState({});
   const [imgResponse,setImgResponse] = useState("")
   const { user, dispatch } = useContext(Context);
-  const handleSubmit =async (e) => {
+  console.log("check user context api",user)
+  const handleSubmit = async (e) => {
+    
     e.preventDefault()
+    
+  //   const formData = new FormData();
+  //  formData.append("file", imageSelected)
+  //  formData.append("upload_preset", "kchrwa7s")
+   
+  //  axios.post("https://api.cloudinary.com/v1_1/kienquan/image/upload", formData).then(res => {
+  //   console.log("check res image cloudinary", res)
+  //    setImgResponse(res.data.secure_url)
+  //  })
     dispatch({type: 'UPDATE_START'})
     const updatedUser = {
       userId:user.data.others._id,
-      username, email, password,
+      username, email,
       profilePic:imgResponse
     }
     try {
       
      const res = await axiosInstance.put("/users/"+user.data.others._id, updatedUser);
-      setSuccess(true)
+      // setSuccess(true)
+      console.log("check res data:", res.data)
+      window.location.replace("/")
+      
     dispatch({type: 'UPDATE_SUCCESS', payload: res.data})
 
     } catch (err) {
@@ -34,16 +59,23 @@ export default function Settings() {
       console.log(err)
     }
   }
-    const uploadImage = () => {
+    const uploadImage = async () => {
     const formData = new FormData();
     formData.append("file", imageSelected)
     formData.append("upload_preset", "kchrwa7s")
 
-    axios.post("https://api.cloudinary.com/v1_1/kienquan/image/upload", formData).then(res => {
-      setImgResponse(res.data.secure_url)
+     await axios.post("https://api.cloudinary.com/v1_1/kienquan/image/upload", formData).then(res => {
+    console.log("check res image cloudinary", res)
+      
+       setImgResponse(res.data.secure_url)
+       alert("upload image ok")
+      // console.log(imgResponse)
     })
-  }
+    // console.log(URL.createObjectURL(imageSelected))
+    }
+    
   return (
+
     <div className="settings">
       <div className="settingsWrapper">
         <div className="settingsTitle">
@@ -58,7 +90,7 @@ export default function Settings() {
               // src={file ? URL.createObjectURL(file) : PF + user.data.others.profilePic}
               alt=""
             /> */}
-             <Image cloudName="kienquan" publicId={ user.data.others.profilePic}
+             <Image cloudName="kienquan" publicId={(user && user.data && user.data.others && user.data.others.profilePic) || ""}
         className="writeImg"
             />
             <input id="fileInput" type="file" style={{display:'none'}}
@@ -78,19 +110,23 @@ export default function Settings() {
             /> */}
           </div>
           <label>Username</label>
-          <input type="text" placeholder={user.data.others.username} name="name" onChange={e=>setUsername(e.target.value)}/>
+          <input type="text" placeholder={""} name="name" onChange={e => setUsername(e.target.value)}
+          value={username}
+          />
           <label>Email</label>
-          <input type="email" placeholder={user.data.others.email} name="email"
+          <input type="email" placeholder={""} name="email"
+          value={email}
           onChange={e=>setEmail(e.target.value)}
           />
-          <label>Password</label>
+          {/* <label>Password</label>
           <input type="password" placeholder="Password" name="password"
+            value={password}
           onChange={e=>setPassword(e.target.value)}
-          />
+          /> */}
           <button className="settingsSubmitButton" type="submit">
             Update
           </button>
-          {success && <span style={{color:'green'}}>profile has been updated..</span>}
+          {/* {success && <span style={{color:'green'}}>profile has been updated..</span>} */}
         </form>
       </div>
       <Sidebar />
