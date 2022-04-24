@@ -4,17 +4,30 @@ import axios from "axios"
 import { Context } from "../../context/Context";
 import {Image} from "cloudinary-react"
 import { axiosInstance } from "../../config";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
 export default function Write() {
+  function handleEditorChange({ html, text }, e) {
+    console.log('handleEditorChange', html, text);
+    setDesc(html)
+    setDescMarkdown(text)
+  }
+
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
+  const [descMarkdown,setDescMarkdown] = useState("")
   const { user } = useContext(Context);
   const [imageSelected, setImageSelected] = useState({});
   const [imgResponse,setImgResponse] = useState("")
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
+    
     e.preventDefault()
     const newPost = {
       username:user.data.others.username,
-      title, desc,
+      title, desc,descMarkdown,
       photo: imgResponse
     }
     try {
@@ -58,14 +71,10 @@ export default function Write() {
 
         </div>
         <div className="writeFormGroup">
-          <textarea
-            className="writeInput writeText"
-            placeholder="Tell your story..."
-            type="text"
-            autoFocus={true}
-            onChange={e =>setDesc(e.target.value)}
+          <MdEditor style={{
+            height: '500px', width: '100%'
+}} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
 
-          />
         </div>
         <button className="writeSubmit" type="submit"
         >

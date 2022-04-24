@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import "./post.css";
 import axios from "axios";
-import { useEffect } from "react";
-export default function Post({img, post}) {
+import { useEffect } from 
+  "react";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+export default function Post({ img, post }) {
+  function handleEditorChange({ html, text }, e) {
+    // console.log('handleEditorChange', html, text);
+    // setDesc(text)
+  }
   return (
     <div className="post">
       {post.photo &&
@@ -37,8 +47,9 @@ export default function Post({img, post}) {
         <hr />
         <span className="postDate">{new Date( post.createdAt).toDateString()}</span>
       </div>
-      <p className="postDesc">
-        {post.desc}
+       <p
+      dangerouslySetInnerHTML={{__html: post.desc}}
+        className="postDesc">
       </p>
     </div>
   );

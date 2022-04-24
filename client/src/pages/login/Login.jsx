@@ -28,19 +28,28 @@ export default function Login() {
   console.log(user)
   return (
     <div className="login">
-      <span className="loginTitle">Login</span>
-      <form className="loginForm" onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input className="loginInput" type="text" placeholder="Enter your username..."
-        ref={userRef}
-        />
-        <label>Password</label>
-        <input className="loginInput" type="password" placeholder="Enter your password..."
-        ref={passwordRef}/>
-        <button className="loginButton" type="submit"
-        disabled={isFetching}
-        >Login</button>
-      </form>
+     <div className="login-box">
+        <h2>Login</h2>
+        <form  onSubmit={handleSubmit}>
+          <div className="user-box">
+            <input className="loginInput" type="text" placeholder="Enter your username..."
+        ref={userRef} />
+            <label>Username</label>
+          </div>
+          <div class="user-box">
+            <input className="loginInput" type="password" placeholder="Enter your password..."
+        ref={passwordRef} />
+            <label>Password</label>
+          </div>
+            <button href="#" alt="submit" type="submit" disabled={isFetching}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+          </button>
+        </form>
+      </div>
       <button className="loginRegisterButton"
       
       >
