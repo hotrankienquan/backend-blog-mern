@@ -11,7 +11,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 export default function Write() {
   function handleEditorChange({ html, text }, e) {
-    console.log('handleEditorChange', html, text);
+    // console.log('handleEditorChange', html, text);
     setDesc(html)
     setDescMarkdown(text)
   }

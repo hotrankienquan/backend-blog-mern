@@ -17,7 +17,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 export default function SinglePost() {
   function handleEditorChange({ html, text }, e) {
-    console.log('handleEditorChange', html, text);
+    // console.log('handleEditorChange', html, text);
      setDesc(html)
      setDescMarkdown(text)
      
